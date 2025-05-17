@@ -25,6 +25,7 @@ public class AppInitializer implements ServletContextListener {
 
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(URL);
+            config.setDriverClassName("org.postgresql.Driver");
             config.setUsername(USER);
             config.setPassword(PASSWORD);
             config.setMaximumPoolSize(10);
@@ -38,7 +39,7 @@ public class AppInitializer implements ServletContextListener {
             DBInit.runSchemaSetup(connection);
 
         } catch (Exception e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to initialize HikariCP datasource");
+            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to initialize HikariCP datasource. " + e.getMessage());
             throw new RuntimeException("Unable to initialize HikariCP datasource");
         }
     }
