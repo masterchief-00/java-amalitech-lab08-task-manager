@@ -10,18 +10,18 @@ public class Task {
     private TaskPriority priority;
     private LocalDate due;
     private TaskStatus status;
-    private int projectId;
+    private Project project;
     private LocalDate createdAt;
     private Optional<LocalDate> updatedAt;
 
-    public Task(int id, String title, String description, TaskPriority priority, LocalDate due, TaskStatus status, int projectId) {
+    public Task(int id, String title, String description, TaskPriority priority, LocalDate due, TaskStatus status, Project project) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.due = due;
         this.status = status;
-        this.projectId = projectId;
+        this.project = project;
         this.createdAt = LocalDate.now();
         this.updatedAt = Optional.empty();
     }
@@ -74,14 +74,6 @@ public class Task {
         this.status = status;
     }
 
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
     public LocalDate getCreatedAt() {
         return createdAt;
     }
@@ -96,5 +88,13 @@ public class Task {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = Optional.ofNullable(updatedAt);
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

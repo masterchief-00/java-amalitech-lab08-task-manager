@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS project
     title       VARCHAR(250) NOT NULL,
     description TEXT         NOT NULL,
     due         DATE         NOT NULL,
-    employee_id INTEGER      NOT NULL NULL REFERENCES employee (id),
+    employee_id INTEGER      NOT NULL REFERENCES employee (id),
     created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP
 );
@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS task
 
 -- INDEXES
 CREATE INDEX idx_employee_email ON employee (email);
-CREATE INDEX idx_projects_employee_id ON project (employee_id);
+CREATE INDEX idx_employee_id ON employee (id);
+CREATE INDEX idx_projects_employee_id_due ON project (employee_id, due);
+CREATE INDEX idx_projects_id ON project (id);
 CREATE INDEX idx_task_project_id_status_priority ON task (project_id, status, priority);
 CREATE INDEX idx_task_project_id_due ON task (project_id, due);

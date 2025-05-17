@@ -7,26 +7,26 @@ public class Project {
     private int id;
     private String title;
     private String description;
-    private int employeeId;
+    private Employee employee;
     private LocalDate due;
     private LocalDate createdAt;
     private Optional<LocalDate> updatedAt;
 
-    public Project(int id, String title, String description, int employeeId, LocalDate due) {
+    public Project(int id, String title, String description, Employee employee, LocalDate due) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.employeeId = employeeId;
+        this.employee = employee;
         this.due = due;
         this.createdAt = LocalDate.now();
         this.updatedAt = Optional.empty();
     }
 
-    public Project(int id, String title, String description, int employeeId, LocalDate due, LocalDate createdAt, Optional<LocalDate> updatedAt) {
+    public Project(int id, String title, String description, Employee employee, LocalDate due, LocalDate createdAt, Optional<LocalDate> updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.employeeId = employeeId;
+        this.employee = employee;
         this.due = due;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -56,13 +56,6 @@ public class Project {
         this.description = description;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
 
     public LocalDate getDue() {
         return due;
@@ -86,5 +79,13 @@ public class Project {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = Optional.ofNullable(updatedAt);
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

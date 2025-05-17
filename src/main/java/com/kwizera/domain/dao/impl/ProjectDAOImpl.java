@@ -1,6 +1,8 @@
 package com.kwizera.domain.dao.impl;
 
+import com.kwizera.domain.dao.EmployeeDAO;
 import com.kwizera.domain.dao.ProjectDAO;
+import com.kwizera.domain.entities.Employee;
 import com.kwizera.domain.entities.Project;
 import com.kwizera.utils.CustomLogger;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 public class ProjectDAOImpl implements ProjectDAO {
     private final DataSource dataSource;
+    private EmployeeDAO employeeDAO;
 
     public ProjectDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -21,10 +24,12 @@ public class ProjectDAOImpl implements ProjectDAO {
     public void save(Project project) {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO project(title,description,due,employee_id) VALUES (?,?,?,?)")) {
+                Employee employee = employeeDAO.findById(project.getEmployee().getId());
+
                 statement.setString(1, project.getTitle());
                 statement.setString(2, project.getDescription());
                 statement.setDate(3, Date.valueOf(project.getDue()));
-                statement.setInt(4, project.getId());
+                statement.setInt(4, employee.getId());
                 statement.executeUpdate();
                 CustomLogger.log(CustomLogger.LogLevel.INFO, "Project created");
             } catch (SQLException e) {
@@ -44,11 +49,12 @@ public class ProjectDAOImpl implements ProjectDAO {
                 Project project = null;
                 ResultSet rs = statement.executeQuery();
                 while (rs.next()) {
+                    Employee employee = employeeDAO.findById(rs.getInt("employee_id"));
                     project = new Project(
                             rs.getInt("id"),
                             rs.getString("title"),
                             rs.getString("description"),
-                            rs.getInt("employee_id"),
+                            employee,
                             rs.getDate("due").toLocalDate(),
                             rs.getDate("created_at").toLocalDate(),
                             Optional.ofNullable(rs.getDate("updated_at").toLocalDate())
@@ -75,11 +81,13 @@ public class ProjectDAOImpl implements ProjectDAO {
                 ResultSet rs = statement.executeQuery();
                 List<Project> projects = new ArrayList<>();
                 while (rs.next()) {
+                    Employee employee = employeeDAO.findById(rs.getInt("employee_id"));
+
                     Project project = new Project(
                             rs.getInt("id"),
                             rs.getString("title"),
                             rs.getString("description"),
-                            rs.getInt("employee_id"),
+                            employee,
                             rs.getDate("due").toLocalDate(),
                             rs.getDate("created_at").toLocalDate(),
                             Optional.ofNullable(rs.getDate("updated_at").toLocalDate())
