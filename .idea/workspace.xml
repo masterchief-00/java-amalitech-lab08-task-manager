@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02375470-ae47-4c23-a764-53693f20a182" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/models/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/models/Project.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/CustomLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/DBConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/DBInit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/config/AppInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/EmployeeDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/ProjectDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/EmployeeDAOImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/ProjectDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/entities/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/DBConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -70,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747476120487</updated>
-      <workItem from="1747476121687" duration="6102000" />
+      <workItem from="1747476121687" duration="14395000" />
     </task>
     <servers />
   </component>

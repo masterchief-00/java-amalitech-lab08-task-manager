@@ -22,6 +22,16 @@ public class Project {
         this.updatedAt = Optional.empty();
     }
 
+    public Project(int id, String title, String description, int employeeId, LocalDate due, LocalDate createdAt, Optional<LocalDate> updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.employeeId = employeeId;
+        this.due = due;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public int getId() {
         return id;
     }

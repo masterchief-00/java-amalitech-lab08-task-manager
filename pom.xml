@@ -35,7 +35,11 @@
             <artifactId>dotenv-java</artifactId>
             <version>2.2.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>java-amalitech-lab08-task-manager</finalName>
