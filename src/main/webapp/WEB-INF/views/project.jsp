@@ -35,8 +35,9 @@
         }
 
         .task-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
             gap: 20px;
         }
 
@@ -118,6 +119,108 @@
             cursor: pointer;
             text-decoration: none;
         }
+
+        .priority-h {
+            background-color: #ff4400;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .priority-m {
+            background-color: #6ed82e;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .priority-low {
+            background-color: #484848;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .status-h {
+            background-color: #22c300;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .status-m {
+            background-color: #d8bc2e;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .status-low {
+            background-color: #dd00ff;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .priority-filter {
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            align-items: center;
+            margin-top: 10px;
+            padding: 0 10px;
+            border-left: solid 5px #2f2f2f;
+        }
+
+        .no-filter {
+            background-color: transparent;
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: solid 0.8px #6d6d6d;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .filters {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            align-items: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +238,32 @@
     </p>
     <a href="${pageContext.request.contextPath}/task/create?projectId=<%= project.getId() %>" class="add-task-btn">+
         Create Task</a>
+    <div class="filters">
+        <div class="priority-filter">
+            <a class="no-filter"
+               href="${pageContext.request.contextPath}/task?projectId=<%= project.getId() %>">No
+                Filter</a>
+        </div>
+        <div class="priority-filter">
+            <label>Priority filter: </label>
+            <a class="priority-h"
+               href="${pageContext.request.contextPath}/tasks/priority?priority=HIGH&projectId=<%= project.getId() %>">High</a>
+            <a class="priority-m"
+               href="${pageContext.request.contextPath}/tasks/priority?priority=MEDIUM&projectId=<%= project.getId() %>">Medium</a>
+            <a class="priority-low"
+               href="${pageContext.request.contextPath}/tasks/priority?priority=LOW&projectId=<%= project.getId() %>">Low</a>
+        </div>
+        <div class="priority-filter">
+            <label>Status filter: </label>
+            <a class="status-h"
+               href="${pageContext.request.contextPath}/tasks/status?status=COMPLETED&projectId=<%= project.getId() %>">Completed</a>
+            <a class="status-m"
+               href="${pageContext.request.contextPath}/tasks/status?status=PENDING&projectId=<%= project.getId() %>">Pending</a>
+            <a class="status-low"
+               href="${pageContext.request.contextPath}/tasks/status?status=CANCELLED&projectId=<%= project.getId() %>">Cancelled</a>
+        </div>
+    </div>
+
 </div>
 
 <div class="task-list">
@@ -159,6 +288,7 @@
             <%= task.getDescription() %>
         </p>
     </div>
+    <div></div>
     <%
         }
     } else {
