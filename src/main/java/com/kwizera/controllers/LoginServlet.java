@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 HttpSession session = request.getSession();
                 HttpSessionUtil.setSession(session, employee);
-                request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             }
         } catch (RuntimeException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, " + e.getMessage());

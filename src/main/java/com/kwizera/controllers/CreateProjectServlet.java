@@ -45,7 +45,7 @@ public class CreateProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        String due = request.getParameter("due");
+        String due = request.getParameter("dueDate");
 
         if (InputValidationUtil.invalidProjectTitle(title)) {
             CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, Invalid title");
@@ -75,7 +75,8 @@ public class CreateProjectServlet extends HttpServlet {
             try {
                 Employee employee = employeeServices.getEmployee(userEmail);
                 Project project = new Project(0, title, description, employee, Date.valueOf(due).toLocalDate());
-                request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+                projectServices.createProject(project);
+                response.sendRedirect(request.getContextPath() + "/dashboard");
             } catch (RuntimeException e) {
                 CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, " + e.getMessage());
                 request.setAttribute("error", e.getMessage());

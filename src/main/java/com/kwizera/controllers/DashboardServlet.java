@@ -42,6 +42,7 @@ public class DashboardServlet extends HttpServlet {
 
             try {
                 List<Project> projects = projectServices.getProjects(userId, 10, 1);
+                CustomLogger.log(CustomLogger.LogLevel.INFO, projects.size() + " projects retrieved");
                 request.setAttribute("projects", projects);
                 request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
             } catch (RuntimeException e) {

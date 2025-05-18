@@ -20,7 +20,7 @@ public class InputValidationUtil {
     }
 
     public static boolean invalidProjectDescription(String description) {
-        return (!description.matches("^[a-zA-Z0-9 .,!?:;'\"()\\-&%+/]{10,200}$"));
+        return (!description.matches("^[a-zA-Z0-9 .,!?:;'\"()\\-&%+/]{10,500}$"));
     }
 
     public static boolean invalidLocalDate(String date) {

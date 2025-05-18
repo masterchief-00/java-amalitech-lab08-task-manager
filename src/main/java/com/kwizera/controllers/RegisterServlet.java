@@ -36,8 +36,8 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -64,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
             Employee registeredEmployee = employeeServices.register(employee);
             HttpSession session = request.getSession();
             HttpSessionUtil.setSession(session, registeredEmployee);
-            request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         } catch (DuplicateEmailException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Registration failed, user already exists");
             request.setAttribute("error", e.getMessage());

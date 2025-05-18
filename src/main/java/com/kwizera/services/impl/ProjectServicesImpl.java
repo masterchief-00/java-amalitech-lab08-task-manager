@@ -14,6 +14,11 @@ public class ProjectServicesImpl implements ProjectServices {
     }
 
     @Override
+    public Project getProject(int projectId) {
+        return projectDAO.findById(projectId);
+    }
+
+    @Override
     public List<Project> getProjects(int userId, int limit, int page) {
         return projectDAO.findAll(userId, limit, page);
     }
