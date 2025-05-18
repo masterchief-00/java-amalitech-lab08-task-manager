@@ -42,24 +42,23 @@ public class LoginServlet extends HttpServlet {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, invalid password");
             request.setAttribute("error", "Invalid credentials");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-        }
-
-        try {
-            Employee employee = employeeServices.login(email, password);
-            if (employee == null) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, user does not exist");
-                request.setAttribute("error", "User does not exists");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-                HttpSession session = request.getSession();
-                HttpSessionUtil.setSession(session, employee);
-                request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
+        } else {
+            try {
+                Employee employee = employeeServices.login(email, password);
+                if (employee == null) {
+                    CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, user does not exist");
+                    request.setAttribute("error", "User does not exists");
+                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                } else {
+                    HttpSession session = request.getSession();
+                    HttpSessionUtil.setSession(session, employee);
+                    response.sendRedirect(request.getContextPath() + "/dashboard");
+                }
+            } catch (RuntimeException e) {
+                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, " + e.getMessage());
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
             }
-        } catch (RuntimeException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Login failed, " + e.getMessage());
-            request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-
     }
 }

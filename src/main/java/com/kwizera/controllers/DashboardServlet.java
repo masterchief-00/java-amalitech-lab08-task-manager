@@ -42,6 +42,7 @@ public class DashboardServlet extends HttpServlet {
 
             try {
                 List<Project> projects = projectServices.getProjects(userId, 10, 1);
+                CustomLogger.log(CustomLogger.LogLevel.INFO, projects.size() + " projects retrieved");
                 request.setAttribute("projects", projects);
                 request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
             } catch (RuntimeException e) {
@@ -59,8 +60,8 @@ public class DashboardServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idParam = request.getParameter("id");
-        if (InputValidationUtil.invalidURLParam(idParam)) {
+        String idParam = request.getParameter("projectId");
+        if (idParam == null || InputValidationUtil.invalidURLParam(idParam)) {
             CustomLogger.log(CustomLogger.LogLevel.WARN, "Invalid URL param. project not deleted");
             request.setAttribute("error", "Invalid project id");
             request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
@@ -68,10 +69,10 @@ public class DashboardServlet extends HttpServlet {
 
         try {
             projectServices.delete(Integer.parseInt(idParam));
-            response.sendRedirect("/WEB-INF/views/dashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/dashboard");
         } catch (RuntimeException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, e.getMessage());
-            request.setAttribute("error", "Unable to delete project. " + e.getMessage());
+            request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
         }
     }

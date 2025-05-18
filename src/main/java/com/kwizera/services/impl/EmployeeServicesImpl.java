@@ -28,6 +28,7 @@ public class EmployeeServicesImpl implements EmployeeServices {
         if (foundEmployee != null) {
             throw new DuplicateEmailException("The provided email is already registered");
         }
+        employee.setPassword(PasswordUtil.hashPassword(employee.getPassword()));
         return employeeDAO.save(employee);
     }
 

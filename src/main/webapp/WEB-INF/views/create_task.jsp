@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: pacst
   Date: 2025-05-18
-  Time: 12:37
+  Time: 14:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,7 +10,6 @@
     String projectId = request.getParameter("projectId");
     String error = (String) request.getAttribute("error");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,16 +106,15 @@
     </style>
 </head>
 <body>
-
 <div class="title-container">
-    <h1>Create New Project</h1>
-    <a class="go-back" href="${pageContext.request.contextPath}/dashboard">All Projects</a>
+    <h1>Create New Task</h1>
+    <a class="go-back" href="${pageContext.request.contextPath}/task?projectId=<%= projectId %>">Back to project</a>
 </div>
 
 
-<form action="${pageContext.request.contextPath}/project" method="post">
+<form action="${pageContext.request.contextPath}/task/create" method="post">
     <!-- Sending projectId as hidden input -->
-    <input type="hidden" name="userId" value="<%= projectId %>">
+    <input type="hidden" name="projectId" value="<%= projectId %>">
 
     <label for="title">Title</label>
     <input type="text" name="title" id="title" required>
@@ -124,12 +122,24 @@
     <label for="description">Description</label>
     <textarea name="description" id="description" required></textarea>
 
+    <label for="priority">Priority</label>
+    <select name="priority" id="priority" required>
+        <option value="HIGH">High</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="LOW">Low</option>
+    </select>
+
+    <label for="status">Status</label>
+    <select name="status" id="status" required>
+        <option value="PENDING" selected>Pending</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="CANCELLED">Cancelled</option>
+    </select>
+
     <label for="dueDate">Due Date</label>
     <input type="date" name="dueDate" id="dueDate" required>
-
-
     <div class="form-footer">
-        <button type="submit">Create Project</button>
+        <button type="submit">Create Task</button>
         <% if (error != null) {
         %>
         <label class="error">ERROR: <%=error%>
@@ -139,8 +149,8 @@
         <div></div>
         <%
             }%>
-
     </div>
+
 </form>
 
 </body>
