@@ -1,8 +1,8 @@
 package com.kwizera.utils;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +10,12 @@ import java.sql.Statement;
 public class DBInit {
     public static void runSchemaSetup(Connection connection) {
         try {
-            String sql = Files.readString(Paths.get("src/main/resources/db/schema.sql"));
+            InputStream input = DBInit.class.getClassLoader().getResourceAsStream("schema.sql");
+            if (input == null) {
+                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Schema file not found");
+                throw new IOException("Schema file not found");
+            }
+            String sql = new String(input.readAllBytes(), StandardCharsets.UTF_8);
             Statement stmt = connection.createStatement();
             stmt.execute(sql);
             CustomLogger.log(CustomLogger.LogLevel.INFO, "Database migration completed");

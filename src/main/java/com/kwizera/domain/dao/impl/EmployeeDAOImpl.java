@@ -76,7 +76,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public void save(Employee employee) {
+    public Employee save(Employee employee) {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employee(first_name,last_name,email,password) VALUES (?,?,?,?);")) {
                 preparedStatement.setString(1, employee.getFirstName());
@@ -86,9 +86,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
                 preparedStatement.executeUpdate();
                 CustomLogger.log(CustomLogger.LogLevel.INFO, "Employee created");
+
+                return employee;
             } catch (SQLException e) {
                 CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to create employee. SQLException");
-                throw new RuntimeException("Unable to create employee.");
+                throw new RuntimeException("Unable to create employee. " + e.getMessage());
             }
         } catch (SQLException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");

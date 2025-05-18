@@ -1,3 +1,20 @@
+-- ENUMS
+DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'priority_enum') THEN
+            CREATE TYPE priority_enum AS ENUM ('HIGH','MEDIUM','LOW');
+        END IF;
+    END
+$$;
+
+DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_enum') THEN
+            CREATE TYPE status_enum AS ENUM ('PENDING','COMPLETED','CANCELLED');
+        END IF;
+    END
+$$;
+
 -- EMPLOYEE TABLE
 CREATE TABLE IF NOT EXISTS employee
 (
@@ -20,10 +37,6 @@ CREATE TABLE IF NOT EXISTS project
     updated_at  TIMESTAMP
 );
 
--- ENUMS
-CREATE TYPE priority_enum AS ENUM ('HIGH','MEDIUM','LOW');
-CREATE TYPE status_enum AS ENUM ('PENDING','COMPLETED','CANCELLED');
-
 -- TASK TABLE
 CREATE TABLE IF NOT EXISTS task
 (
@@ -39,9 +52,9 @@ CREATE TABLE IF NOT EXISTS task
 );
 
 -- INDEXES
-CREATE INDEX idx_employee_email ON employee (email);
-CREATE INDEX idx_employee_id ON employee (id);
-CREATE INDEX idx_projects_employee_id_due ON project (employee_id, due);
-CREATE INDEX idx_projects_id ON project (id);
-CREATE INDEX idx_task_project_id_status_priority ON task (project_id, status, priority);
-CREATE INDEX idx_task_project_id_due ON task (project_id, due);
+CREATE INDEX IF NOT EXISTS idx_employee_email ON employee (email);
+CREATE INDEX IF NOT EXISTS idx_employee_id ON employee (id);
+CREATE INDEX IF NOT EXISTS idx_projects_employee_id_due ON project (employee_id, due);
+CREATE INDEX IF NOT EXISTS idx_projects_id ON project (id);
+CREATE INDEX IF NOT EXISTS idx_task_project_id_status_priority ON task (project_id, status, priority);
+CREATE INDEX IF NOT EXISTS idx_task_project_id_due ON task (project_id, due);

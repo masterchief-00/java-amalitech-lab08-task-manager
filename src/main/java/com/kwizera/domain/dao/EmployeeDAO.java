@@ -10,5 +10,5 @@ public interface EmployeeDAO {
 
     Employee findByEmail(String email);
 
-    void save(Employee employee);
+    Employee save(Employee employee);
 }

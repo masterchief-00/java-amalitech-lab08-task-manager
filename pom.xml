@@ -40,8 +40,32 @@
             <artifactId>HikariCP</artifactId>
             <version>5.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>java-amalitech-lab08-task-manager</finalName>
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>.env</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.sql</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>
