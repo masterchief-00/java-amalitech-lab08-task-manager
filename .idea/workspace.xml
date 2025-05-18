@@ -10,16 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02375470-ae47-4c23-a764-53693f20a182" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/TaskByPriorityServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/TaskByStatusServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/626afd0f-7ffc-46e0-8ebf-c3d8bd60693e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/626afd0f-7ffc-46e0-8ebf-c3d8bd60693e.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/erd.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/TaskDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/TaskDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/TaskServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/TaskServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/TaskServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/TaskServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/project.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/project.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
