@@ -14,4 +14,9 @@ public class HttpSessionUtil {
     public static HttpSession getSession(HttpServletRequest request) {
         return request.getSession(false);
     }
+
+    public static void destroySession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) session.invalidate();
+    }
 }

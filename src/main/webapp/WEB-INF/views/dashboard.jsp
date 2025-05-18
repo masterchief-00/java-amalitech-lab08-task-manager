@@ -102,17 +102,42 @@
             border-top: solid 8px rgba(0, 99, 248, 0.94);
             padding: 6px 0;
         }
+
+        .title-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+        .go-back {
+            background-color: #008dff;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
+    <script>
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this project?");
+        }
+    </script>
 </head>
 <body>
 <div class="header">
-    <h2>Your Projects</h2>
+    <div class="title-container">
+        <h2>Your Projects</h2>
+        <a class="go-back" href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
     <a href="${pageContext.request.contextPath}/project" class="create-btn">+ New Project</a>
 </div>
 
 <div class="projects">
     <%
-        // Example: Assuming you have a list of Project objects in the request scope
         List<Project> projects = (List<Project>) request.getAttribute("projects");
         if (projects != null && !projects.isEmpty()) {
             for (Project p : projects) {
@@ -126,7 +151,8 @@
             <div class="due-date">Due: <%= p.getDue() %>
             </div>
         </a>
-        <form action="${pageContext.request.contextPath}/dashboard" method="post">
+        <form action="${pageContext.request.contextPath}/dashboard" method="post" onsubmit="return confirmDelete();">
+            <input type="hidden" name="projectId" value="<%= p.getId() %>"/>
             <button class="delete-btn" type="submit">Delete project</button>
         </form>
     </div>
@@ -135,7 +161,7 @@
         }
     } else {
     %>
-    <p>No projects yet. Click "New Project" to get started!</p>
+    <p>No projects yet. Click " New Project" to get started!</p>
     <%
         }
     %>

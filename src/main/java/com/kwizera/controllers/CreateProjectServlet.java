@@ -49,43 +49,43 @@ public class CreateProjectServlet extends HttpServlet {
 
         if (InputValidationUtil.invalidProjectTitle(title)) {
             CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, Invalid title");
-            request.setAttribute("error", "Invalid names");
+            request.setAttribute("error", "Invalid title");
             request.getRequestDispatcher("/WEB-INF/views/create_project.jsp").forward(request, response);
-        }
-        if (InputValidationUtil.invalidProjectDescription(description)) {
+        } else if (InputValidationUtil.invalidProjectDescription(description)) {
             CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, Invalid description");
-            request.setAttribute("error", "Invalid names");
+            request.setAttribute("error", "Invalid description");
             request.getRequestDispatcher("/WEB-INF/views/create_project.jsp").forward(request, response);
-        }
-        if (InputValidationUtil.invalidLocalDate(due)) {
+        } else if (InputValidationUtil.invalidLocalDate(due)) {
             CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, Invalid due date");
             request.setAttribute("error", "Invalid due date");
             request.getRequestDispatcher("/WEB-INF/views/create_project.jsp").forward(request, response);
-        }
+        } else {
+            HttpSession session = HttpSessionUtil.getSession(request);
+            if (session != null) {
+                String userEmail = (String) session.getAttribute("userEmail");
+                if (userEmail == null) {
+                    CustomLogger.log(CustomLogger.LogLevel.WARN, "Unauthorized access, session is null.");
+                    request.setAttribute("error", "Unauthorized access");
+                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                }
 
-        HttpSession session = HttpSessionUtil.getSession(request);
-        if (session != null) {
-            String userEmail = (String) session.getAttribute("userEmail");
-            if (userEmail == null) {
+                try {
+                    Employee employee = employeeServices.getEmployee(userEmail);
+                    Project project = new Project(0, title, description, employee, Date.valueOf(due).toLocalDate());
+                    projectServices.createProject(project);
+                    response.sendRedirect(request.getContextPath() + "/dashboard");
+                } catch (RuntimeException e) {
+                    CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, " + e.getMessage());
+                    request.setAttribute("error", e.getMessage());
+                    request.getRequestDispatcher("/WEB-INF/views/create_project.jsp").forward(request, response);
+                }
+            } else {
                 CustomLogger.log(CustomLogger.LogLevel.WARN, "Unauthorized access, session is null.");
                 request.setAttribute("error", "Unauthorized access");
                 request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
             }
-
-            try {
-                Employee employee = employeeServices.getEmployee(userEmail);
-                Project project = new Project(0, title, description, employee, Date.valueOf(due).toLocalDate());
-                projectServices.createProject(project);
-                response.sendRedirect(request.getContextPath() + "/dashboard");
-            } catch (RuntimeException e) {
-                CustomLogger.log(CustomLogger.LogLevel.WARN, "Unable to create project, " + e.getMessage());
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("/WEB-INF/views/create_project.jsp").forward(request, response);
-            }
-        } else {
-            CustomLogger.log(CustomLogger.LogLevel.WARN, "Unauthorized access, session is null.");
-            request.setAttribute("error", "Unauthorized access");
-            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
+
+
     }
 }

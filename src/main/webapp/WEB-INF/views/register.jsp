@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String error = (String) request.getAttribute("error");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,6 +60,11 @@
             margin-top: 10px;
             text-align: center;
         }
+
+        .error {
+            color: #ff6185;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +79,13 @@
     </form>
     <div class="link">
         <p>Already have an account? <a href="${pageContext.request.contextPath}/login">Login</a></p>
+        <% if (error != null) {
+        %>
+        <label class="error">ERROR: <%=error%>
+        </label>
+        <%
+            }
+        %>
     </div>
 </div>
 </body>

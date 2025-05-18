@@ -44,6 +44,7 @@
             background: white;
             border-radius: 8px;
             padding: 16px;
+            width: 300px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -74,18 +75,66 @@
         .add-task-btn:hover {
             background-color: #218838;
         }
+
+        .task-brief {
+            font-size: 14px;
+            color: #2c2c2c;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 5px;
+        }
+
+        .task-edit-btn {
+            background-color: #008dff;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .title-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .go-back {
+            background-color: #008dff;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="project-details">
-    <h1>Project: <%= project.getTitle() %>
-    </h1>
+    <div class="title-container">
+        <h1>Project: <%= project.getTitle() %>
+        </h1>
+        <a class="go-back" href="${pageContext.request.contextPath}/dashboard">All Projects</a>
+    </div>
+
     <p><strong>Description:</strong> <%= project.getDescription() %>
     </p>
     <p><strong>Due Date:</strong> <%= project.getDue() %>
     </p>
-    <a href="create_task.jsp?projectId=<%= project.getId() %>" class="add-task-btn">+ Create Task</a>
+    <a href="${pageContext.request.contextPath}/task/create?projectId=<%= project.getId() %>" class="add-task-btn">+
+        Create Task</a>
 </div>
 
 <div class="task-list">
@@ -94,7 +143,11 @@
             for (Task task : tasks) {
     %>
     <div class="task-card">
-        <div class="task-title"><%= task.getTitle() %>
+        <div class="task-header">
+            <div class="task-title"><%= task.getTitle() %>
+            </div>
+            <a class="task-edit-btn"
+               href="${pageContext.request.contextPath}/task/update?taskId=<%= task.getId() %>&projectId=<%=project.getId()%>">Update</a>
         </div>
         <div class="task-meta">Priority: <%= task.getPriority() %>
         </div>
@@ -102,6 +155,9 @@
         </div>
         <div class="task-meta">Due: <%= task.getDue() %>
         </div>
+        <p class="task-brief">
+            <%= task.getDescription() %>
+        </p>
     </div>
     <%
         }

@@ -1,16 +1,24 @@
-<%--
+<%@ page import="com.kwizera.domain.entities.Task" %><%--
   Created by IntelliJ IDEA.
   User: pacst
   Date: 2025-05-18
-  Time: 12:37
+  Time: 21:04
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String projectId = request.getParameter("projectId");
     String error = (String) request.getAttribute("error");
-%>
+    String projectId = request.getParameter("projectId");
+    String taskId;
+    if (request.getParameter("taskId") == null) {
+        taskId = (String) request.getAttribute("taskId");
+    } else {
+        taskId = request.getParameter("taskId");
+    }
 
+    Task task = (Task) request.getAttribute("task");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,29 +115,45 @@
     </style>
 </head>
 <body>
-
 <div class="title-container">
-    <h1>Create New Project</h1>
-    <a class="go-back" href="${pageContext.request.contextPath}/dashboard">All Projects</a>
+    <h1>Update task</h1>
+    <a class="go-back" href="${pageContext.request.contextPath}/task?projectId=<%= projectId %>">Back to project</a>
 </div>
 
+<%
+    if (task != null) {
+%>
 
-<form action="${pageContext.request.contextPath}/project" method="post">
-    <!-- Sending projectId as hidden input -->
-    <input type="hidden" name="userId" value="<%= projectId %>">
+<form action="${pageContext.request.contextPath}/task/update" method="post">
+    <input type="hidden" name="taskId" value="<%= taskId %>">
+    <input type="hidden" name="projectId" value="<%= projectId %>">
 
     <label for="title">Title</label>
-    <input type="text" name="title" id="title" required>
+    <input type="text" name="title" id="title" value="<%= task.getTitle() %>" required>
 
     <label for="description">Description</label>
-    <textarea name="description" id="description" required></textarea>
+    <textarea name="description" id="description" required><%= task.getDescription() %></textarea>
+
+    <label for="priority">Priority</label>
+    <select name="priority" id="priority" required>
+        <option value="HIGH" <%= "HIGH".equals(task.getPriority().toString()) ? "selected" : ""%>>High</option>
+        <option value="MEDIUM" <%= "MEDIUM".equals(task.getPriority().toString()) ? "selected" : ""%>>Medium</option>
+        <option value="LOW" <%= "LOW".equals(task.getPriority().toString()) ? "selected" : ""%>>Low</option>
+    </select>
+
+    <label for="status">Status</label>
+    <select name="status" id="status" required>
+        <option value="PENDING" <%= "PENDING".equals(task.getStatus().toString()) ? "selected" : ""%>>Pending</option>
+        <option value="COMPLETED" <%= "COMPLETE".equals(task.getStatus().toString()) ? "selected" : ""%>>Completed
+        </option>
+        <option value="CANCELLED" <%= "CANCELLED".equals(task.getPriority().toString()) ? "selected" : ""%>>Cancelled
+        </option>
+    </select>
 
     <label for="dueDate">Due Date</label>
-    <input type="date" name="dueDate" id="dueDate" required>
-
-
+    <input type="date" name="dueDate" id="dueDate" value="<%= task.getDue() %>" required>
     <div class="form-footer">
-        <button type="submit">Create Project</button>
+        <button type="submit">Update Task</button>
         <% if (error != null) {
         %>
         <label class="error">ERROR: <%=error%>
@@ -139,10 +163,15 @@
         <div></div>
         <%
             }%>
-
     </div>
-</form>
 
+</form>
+<%
+} else {
+%>
+<label class="error">ERROR: <%=error%><label>
+        <%
+        }
+        %>
 </body>
 </html>
-

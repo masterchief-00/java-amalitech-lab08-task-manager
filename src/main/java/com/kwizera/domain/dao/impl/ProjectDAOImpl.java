@@ -119,15 +119,13 @@ public class ProjectDAOImpl implements ProjectDAO {
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM project WHERE id = ?")) {
                 statement.setInt(1, projectId);
-                statement.executeQuery();
-                CustomLogger.log(CustomLogger.LogLevel.INFO, "Project deleted");
+                int rowsAffected = statement.executeUpdate();
+                CustomLogger.log(CustomLogger.LogLevel.INFO, rowsAffected + " projects deleted");
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to delete project. SQLException");
-                throw new RuntimeException("Unable to delete project.");
+                throw new RuntimeException("Unable to delete project. " + e.getMessage());
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection. " + e.getMessage());
         }
     }
 }

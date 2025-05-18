@@ -10,23 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02375470-ae47-4c23-a764-53693f20a182" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/TaskServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/TaskServices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/TaskServicesImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/create_task.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/CreateTaskServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/LogOutServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/UpdateTaskServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/update_task.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/CreateProjectServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/CreateProjectServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/DashboardServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/DashboardServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/LoginServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/RegisterServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/controllers/RegisterServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/TaskDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/TaskDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/ProjectDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/ProjectDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/ProjectServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/ProjectServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/EmployeeServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/EmployeeServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/ProjectServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/ProjectServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/InputValidationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/InputValidationUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/TaskDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/dao/impl/TaskDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/entities/TaskStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/domain/entities/TaskStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/TaskServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/TaskServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/TaskServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/services/impl/TaskServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/HttpSessionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kwizera/utils/HttpSessionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/create_project.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/create_project.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/create_task.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/create_task.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/dashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/landing_page.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/landing_page.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/login.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/project.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/project.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/register.jsp" afterDir="false" />
@@ -40,9 +43,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Jsp File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -205,7 +208,7 @@
       <workItem from="1747512012972" duration="162000" />
       <workItem from="1747512185449" duration="8000" />
       <workItem from="1747512225042" duration="4656000" />
-      <workItem from="1747557819200" duration="20880000" />
+      <workItem from="1747557819200" duration="39581000" />
     </task>
     <servers />
   </component>

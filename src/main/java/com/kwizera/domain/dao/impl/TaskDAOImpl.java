@@ -7,6 +7,7 @@ import com.kwizera.utils.CustomLogger;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     public TaskDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
+        this.projectDAO = new ProjectDAOImpl(dataSource);
     }
 
     @Override
@@ -39,8 +41,7 @@ public class TaskDAOImpl implements TaskDAO {
                 }
                 return task;
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to find task by id. SQLException");
-                throw new RuntimeException("Unable to find task by id.");
+                throw new RuntimeException("Unable to find task by id. " + e.getMessage());
             }
         } catch (SQLException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
@@ -51,15 +52,16 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<Task> findAll(int projectId, int limit, int page) throws RuntimeException {
         try (Connection connection = dataSource.getConnection()) {
+            int page_size = limit;
+            int offset = (page - 1) * page_size;
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE project_id = ? LIMIT ? OFFSET ?;")) {
                 statement.setInt(1, projectId);
-                statement.setInt(2, limit);
-                statement.setInt(3, page);
+                statement.setInt(2, page_size);
+                statement.setInt(3, offset);
                 ResultSet rs = statement.executeQuery();
                 return getTasks(rs);
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to find tasks. SQLException");
-                throw new RuntimeException("Unable to find tasks.");
+                throw new RuntimeException("Unable to find tasks. " + e.getMessage());
             }
         } catch (SQLException e) {
             CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
@@ -76,12 +78,10 @@ public class TaskDAOImpl implements TaskDAO {
                 ResultSet rs = statement.executeQuery();
                 return getTasks(rs);
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to find tasks. SQLException");
-                throw new RuntimeException("Unable to find tasks.");
+                throw new RuntimeException("Unable to find tasks. " + e.getMessage());
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection. " + e.getMessage());
         }
     }
 
@@ -94,12 +94,10 @@ public class TaskDAOImpl implements TaskDAO {
                 ResultSet rs = statement.executeQuery();
                 return getTasks(rs);
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to find tasks. SQLException");
-                throw new RuntimeException("Unable to find tasks.");
+                throw new RuntimeException("Unable to find tasks. " + e.getMessage());
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection. " + e.getMessage());
         }
     }
 
@@ -115,8 +113,7 @@ public class TaskDAOImpl implements TaskDAO {
                 throw new RuntimeException("Unable to find tasks.");
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection. " + e.getMessage());
         }
     }
 
@@ -139,9 +136,9 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public void save(Task task) {
+    public Task save(Task task) {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO task(title,description,priority,due,status,project_id) VALUES (?,?,?,?,?,?)")) {
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO task(title,description,priority,due,status,project_id) VALUES (?,?,?::priority_enum,?,?::status_enum,?)")) {
                 Project project = projectDAO.findById(task.getProject().getId());
 
                 statement.setString(1, task.getTitle());
@@ -152,13 +149,37 @@ public class TaskDAOImpl implements TaskDAO {
                 statement.setInt(6, project.getId());
                 statement.executeUpdate();
                 CustomLogger.log(CustomLogger.LogLevel.INFO, "Task created");
+
+                return task;
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to create task. SQLException");
-                throw new RuntimeException("Unable to create task.");
+                throw new RuntimeException("Unable to create task. " + e.getMessage());
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection." + e.getMessage());
+        }
+    }
+
+    @Override
+    public Task update(Task task) {
+        try (Connection connection = dataSource.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("UPDATE task SET title=?, description=?, priority=?::priority_enum,due=?, status=?::status_enum, project_id=?,updated_at=? WHERE id=?")) {
+                statement.setString(1, task.getTitle());
+                statement.setString(2, task.getDescription());
+                statement.setString(3, task.getPriority().toString());
+                statement.setDate(4, Date.valueOf(task.getDue()));
+                statement.setString(5, task.getStatus().toString());
+                statement.setInt(6, task.getProject().getId());
+                statement.setDate(7, Date.valueOf(LocalDate.now()));
+                statement.setInt(8, task.getId());
+                statement.executeUpdate();
+                CustomLogger.log(CustomLogger.LogLevel.INFO, "Task updated " + task.getTitle());
+
+                return task;
+            } catch (SQLException e) {
+                throw new RuntimeException("Unable to update task. " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Unable to establish database connection." + e.getMessage());
         }
     }
 
@@ -170,12 +191,10 @@ public class TaskDAOImpl implements TaskDAO {
                 statement.executeQuery();
                 CustomLogger.log(CustomLogger.LogLevel.INFO, "Task deleted");
             } catch (SQLException e) {
-                CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to delete task. SQLException");
-                throw new RuntimeException("Unable to delete task.");
+                throw new RuntimeException("Unable to delete task." + e.getMessage());
             }
         } catch (SQLException e) {
-            CustomLogger.log(CustomLogger.LogLevel.ERROR, "Unable to establish database connection. SQLException");
-            throw new RuntimeException("Unable to establish database connection.");
+            throw new RuntimeException("Unable to establish database connection. " + e.getMessage());
         }
     }
 }
