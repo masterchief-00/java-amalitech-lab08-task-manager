@@ -72,7 +72,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<Task> priorityFiltered(int projectId, TaskPriority priority) {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE project_id = ? AND priority = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE project_id = ? AND priority = ?::priority_enum")) {
                 statement.setInt(1, projectId);
                 statement.setString(2, priority.toString());
                 ResultSet rs = statement.executeQuery();
@@ -88,7 +88,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<Task> statusFiltered(int projectId, TaskStatus status) {
         try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE project_id = ? AND status = ?")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE project_id = ? AND status = ?::status_enum")) {
                 statement.setInt(1, projectId);
                 statement.setString(2, status.toString());
                 ResultSet rs = statement.executeQuery();

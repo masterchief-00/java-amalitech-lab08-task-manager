@@ -2,9 +2,10 @@ package com.kwizera.services.impl;
 
 import com.kwizera.domain.dao.TaskDAO;
 import com.kwizera.domain.entities.Task;
+import com.kwizera.domain.entities.TaskPriority;
+import com.kwizera.domain.entities.TaskStatus;
 import com.kwizera.services.TaskServices;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 public class TaskServicesImpl implements TaskServices {
@@ -20,13 +21,23 @@ public class TaskServicesImpl implements TaskServices {
     }
 
     @Override
+    public List<Task> getTasksByStatus(int projectId, TaskStatus status) {
+        return taskDAO.statusFiltered(projectId, status);
+    }
+
+    @Override
+    public List<Task> getTasksByPriority(int projectId, TaskPriority priority) {
+        return taskDAO.priorityFiltered(projectId, priority);
+    }
+
+    @Override
     public Task createTask(Task task) {
         return taskDAO.save(task);
     }
 
     @Override
-    public Task updateTask(Task task) {
-        return taskDAO.update(task);
+    public void updateTask(Task task) {
+        taskDAO.update(task);
     }
 
     @Override
